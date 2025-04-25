@@ -343,13 +343,14 @@
     }
     
     .principal-photo {
-      width: 120px;
-      height: 120px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       object-fit: cover;
       border: 4px solid rgba(255,255,255,0.3);
-      margin: 0 auto 20px;
+      margin: 20px auto;
       display: block;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
     
     .principal-message {
@@ -384,10 +385,11 @@
     }
     
     .school-logo {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 20px;
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 20px;
       object-fit: contain;
+      display: block;
     }
     
     .back-btn {
@@ -526,8 +528,8 @@
       }
       
       .principal-photo {
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
       }
       
       .principal-message {
@@ -540,8 +542,8 @@
       }
       
       .school-logo {
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
       }
     }
   </style>
@@ -557,7 +559,9 @@
 
   <!-- Landing Page Content (shown by default) -->
   <div id="landing-page" class="landing-container">
+
     <div class="text-center mb-8">
+      <img src="https://i.ibb.co.com/3YjdDh2N/logo-sekolah-FINAL.png" alt="Logo SMPN 1 Sukasada" class="school-logo">
       <h1 class="title">PENGUMUMAN KELULUSAN</h1>
       <h2 class="subtitle">SMP NEGERI 1 SUKASADA</h2>
     </div>
@@ -565,6 +569,10 @@
     <div class="principal-card">
       <div class="principal-greeting">SAMBUTAN</div>
       <div class="principal-position">KEPALA SMP NEGERI 1 SUKASADA</div>
+      
+      <!-- Principal's Photo -->
+      <img src="https://i.ibb.co.com/Q7y7VMz8/My-Chat-GPT-image.png" alt="My-Chat-GPT-image" alt="Foto Kepala Sekolah" class="principal-photo">
+      
       <div class="principal-name">Ni Ketut Liesvi IsmawanTini, S.Pd., M.Pd.</div>
       
       <div class="principal-message">
@@ -596,6 +604,7 @@
   <div id="announcement-page" class="container mx-auto px-4 py-8 max-w-4xl" style="display: none;">
     <!-- Header -->
     <div class="text-center mb-8">
+      <img src="https://i.ibb.co.com/3YjdDh2N/logo-sekolah-FINAL.png" alt="Logo SMPN 1 Sukasada" class="school-logo">
       <h1 class="title">PENGUMUMAN KELULUSAN</h1>
       <h2 class="subtitle">SMP NEGERI 1 SUKASADA</h2>
       <div class="date-badge">
@@ -741,7 +750,7 @@
     ];
     
     // Announcement date and time (June 15, 2025 at 08:00 WITA)
-    const ANNOUNCEMENT_DATE = new Date('2025-04-15T08:00:00+08:00');
+    const ANNOUNCEMENT_DATE = new Date('2025-05-15T08:00:00+08:00');
     
     let isAnnouncementTime = false;
     
@@ -925,4 +934,3 @@
   </script>
 </body>
 </html>
-
