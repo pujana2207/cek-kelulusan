@@ -34,7 +34,7 @@
       background-size: 400% 400%;
       animation: gradient 15s ease infinite;
       min-height: 100vh;
-      overflow-x: hidden; /* Menghindari scroll horizontal */
+      overflow-x: hidden;
     }
     
     @keyframes gradient {
@@ -156,7 +156,7 @@
     }
     
     .particles {
-      position: fixed; /* Diubah dari absolute ke fixed */
+      position: fixed;
       width: 100%;
       height: 100%;
       top: 0;
@@ -172,7 +172,6 @@
       pointer-events: none;
     }
 
-    /* Perbaikan struktur scroll */
     .main-container {
       width: 100%;
       min-height: 100vh;
@@ -187,6 +186,27 @@
       max-width: 1200px;
       margin: 0 auto;
       position: relative;
+    }
+    
+    .student-photo {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .photo-placeholder {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 4px solid white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
   </style>
 </head>
@@ -367,7 +387,307 @@
   
   <script>
     // Set tanggal pengumuman kelulusan
-    const pengumumanDate = new Date("2025-06-02T10:00:00+08:00").getTime();
+    const pengumumanDate = new Date("2025-06-02T09:00:00+08:00").getTime();
+    
+    // Mapping NISN to Google Drive photo URLs
+    const studentPhotos = {
+      '0076384124':'https://iili.io/3yVd6sn.png',
+'0081653889':'https://iili.io/3yVdifs.png',
+'0081702640':'https://iili.io/3yVds0G.png',
+'0083645381':'https://iili.io/3yVdt5l.png',
+'0084109534':'https://iili.io/3yVdDe2.png',
+'0084895267':'https://iili.io/3yMtoc7.png',
+'0086885642':'https://iili.io/3yMtnFS.png',
+'0087058628':'https://iili.io/3yMtBP2.png',
+'0087334408':'https://iili.io/3yMtqMl.png',
+'0087503521':'https://iili.io/3yMtI9e.png',
+'0088267048':'https://iili.io/3yMtTAu.png',
+'0089051787':'https://iili.io/3yMtAtj.png',
+'0091009746':'https://iili.io/3yMtuwb.png',
+'0091042662':'https://iili.io/3yMt5ox.png',
+'0091083361':'https://iili.io/3yMt7MQ.png',
+'0091098583':'https://iili.io/3yMtYPV.png',
+'0091141291':'https://iili.io/3yMtcKB.png',
+'0091154321':'https://iili.io/3yMtEHF.png',
+'0091208894':'https://iili.io/3yMtVDJ.png',
+'0091243215':'https://iili.io/3yMtMNa.png',
+'0091438019':'https://iili.io/3yMtXov.png',
+'0091445864':'https://iili.io/3yMtjPp.png',
+'0091460689':'https://iili.io/3yMtNKN.png',
+'0091584930':'https://iili.io/3yMtOlI.png',
+'0091604888':'https://iili.io/3yMtvHX.png',
+'0091636533':'https://iili.io/3yMt8Rn.png',
+'0091672529':'https://iili.io/3yMtSNs.png',
+'0091709818':'https://iili.io/3yMtUDG.png',
+'0091745549':'https://iili.io/3yMtrxf.png',
+'0091745680':'https://iili.io/3yMt4V4.png',
+'0091878093':'https://iili.io/3yMtif2.png',
+'0092133461':'https://iili.io/3yMtslS.png',
+'0092221904':'https://iili.io/3yMtLU7.png',
+'0092479836':'https://iili.io/3yMtZJ9.png',
+'0092500521':'https://iili.io/3yMtpxj.png',
+'0092624076':'https://iili.io/3yMD9iQ.png',
+'0092685896':'https://iili.io/3yMDJfV.png',
+'0092784690':'https://iili.io/3yMDd0B.png',
+'0092792343':'https://iili.io/3yMDI0N.png',
+'0092797525':'https://iili.io/3yMDR5X.png',
+'0092863925':'https://iili.io/3yMDcXf.png',
+'0092877066':'https://iili.io/3yMDls4.png',
+'0092921302':'https://iili.io/3yMDGgS.png',
+'0093045572':'https://iili.io/3yMDW79.png',
+'0093069729':'https://iili.io/3yMDwzb.png',
+'0093136986':'https://iili.io/3yMDNXj.png',
+'0093205936':'https://iili.io/3yMDkqQ.png',
+'0093293360':'https://iili.io/3yMDv1V.png',
+'0093371748':'https://iili.io/3yMD8rB.png',
+'0093588482':'https://iili.io/3yMDUdP.png',
+'0093729945':'https://iili.io/3yMDg71.png',
+'0093753722':'https://iili.io/3yMD4mg.png',
+'0093766988':'https://iili.io/3yMDihJ.png',
+'0093784782':'https://iili.io/3yMDQBR.png',
+'0093844836':'https://iili.io/3yMDZ1p.png',
+'0093977177':'https://iili.io/3yMDm7t.png',
+'0093977933':'https://iili.io/3yMDpkX.png',
+'0094195023':'https://iili.io/3yMbJhG.png',
+'0094252759':'https://iili.io/3yMbdQf.png',
+'0094287676':'https://iili.io/3yMb3B4.png',
+'0094290739':'https://iili.io/3yMbK42.png',
+'0094292819':'https://iili.io/3yMbq2S.png',
+'0094335605':'https://iili.io/3yMbBY7.png',
+'0094341269':'https://iili.io/3yMbCv9.png',
+'0094382636':'https://iili.io/3yMbnpe.png',
+'0094385779':'https://iili.io/3yMbxTu.png',
+'0094409699':'https://iili.io/3yMbzhb.png',
+'0094543873':'https://iili.io/3yMbuCx.png',
+'0094575429':'https://iili.io/3yMbAEQ.png',
+'0094603483':'https://iili.io/3yMbYYP.png',
+'0094745288':'https://iili.io/3yMbcyF.png',
+'0094987607':'https://iili.io/3yMb0Tg.png',
+'0095018885':'https://iili.io/3yMb1ja.png',
+'0095126721':'https://iili.io/3yMbW4p.png',
+'0095211922':'https://iili.io/3yMbh3N.png',
+'0095242367':'https://iili.io/3yMbjaI.png',
+'0095278707':'https://iili.io/3yMbwvt.png',
+'0095310174':'https://iili.io/3yMbeun.png',
+'0095400600':'https://iili.io/3yMbvZG.png',
+'0095563945':'https://iili.io/3yMbSnf.png',
+'0095607804':'https://iili.io/3yMbUG4.png',
+'0095609726':'https://iili.io/3yMbg6l.png',
+'0095634185':'https://iili.io/3yMb4F2.png',
+'0095864818':'https://iili.io/3yMb6aS.png',
+'0095875739':'https://iili.io/3yMbP87.png',
+'0095880197':'https://iili.io/3yMbLue.png',
+'0095964697':'https://iili.io/3yMbQwu.png',
+'0095980062':'https://iili.io/3yMbZZb.png',
+'0096014421':'https://iili.io/3yMbDnj.png',
+'0096200253':'https://iili.io/3yMbm6Q.png',
+'0096268654':'https://iili.io/3yMbyFV.png',
+'0096375354':'https://iili.io/3yMm9cB.png',
+'0096438825':'https://iili.io/3yMmH8P.png',
+'0096510695':'https://iili.io/3yMmd91.png',
+'0096546640':'https://iili.io/3yMm3wg.png',
+'0096551629':'https://iili.io/3yMmFta.png',
+'0096675528':'https://iili.io/3yMmfoJ.png',
+'0096705293':'https://iili.io/3yMmBPR.png',
+'0096800474':'https://iili.io/3yMmnFp.png',
+'0096942957':'https://iili.io/3yMmxSI.png',
+'0097110476':'https://iili.io/3yMmTAX.png',
+'0097111440':'https://iili.io/3yMmuNn.png',
+'0097139368':'https://iili.io/3yMmAts.png',
+'0097172127':'https://iili.io/3yMm5oG.png',
+'0097181555':'https://iili.io/3yMm7Vf.png',
+'0097220101':'https://iili.io/3yMmcKl.png',
+'0097304420':'https://iili.io/3yMmll2.png',
+'0097319632':'https://iili.io/3yMm0SS.png',
+'0097330588':'https://iili.io/3yMmEH7.png',
+'0097398938':'https://iili.io/3yMmVDu.png',
+'0097420001':'https://iili.io/3yMmXob.png',
+'0097489823':'https://iili.io/3yMmjix.png',
+'0097501579':'https://iili.io/3yMmNKQ.png',
+'0097525957':'https://iili.io/3yMmeUB.png',
+'0097687321':'https://iili.io/3yMmvHP.png',
+'0097699186':'https://iili.io/3yMmSOF.png',
+'0097745453':'https://iili.io/3yMmUDg.png',
+'0097871163':'https://iili.io/3yMmrxa.png',
+'0097920125':'https://iili.io/3yMm6iv.png',
+'0098067616':'https://iili.io/3yMmslp.png',
+'0098088325':'https://iili.io/3yMmifR.png',
+'0098214279':'https://iili.io/3yMmLUN.png',
+'0098287114':'https://iili.io/3yMmZJI.png',
+'0098364070':'https://iili.io/3yMmtRt.png',
+'0098452618':'https://iili.io/3yMmDOX.png',
+'0098557692':'https://iili.io/3yMmbbn.png',
+'0098599096':'https://iili.io/3yMmpxs.png',
+'0098700947':'https://iili.io/3yMpFJS.png',
+'0098746431':'https://iili.io/3yMpK57.png',
+'0098762260':'https://iili.io/3yMpfe9.png',
+'0098783337':'https://iili.io/3yMpnWb.png',
+'0098897872':'https://iili.io/3yMp7mF.png',
+'0098976666':'https://iili.io/3yMpazg.png',
+'0098999299':'https://iili.io/3yMplLJ.png',
+'0099022536':'https://iili.io/3yMp1qv.png',
+'0099029154':'https://iili.io/3yMpVdN.png',
+'0099055101':'https://iili.io/3yMpW7I.png',
+'0099143957':'https://iili.io/3yMpXet.png',
+'0099187199':'https://iili.io/3yMphmX.png',
+'0099209514':'https://iili.io/3yMpNXs.png',
+'0099254543':'https://iili.io/3yMpOLG.png',
+'0099319071':'https://iili.io/3yMpkBf.png',
+'0099334029':'https://iili.io/3yMpv14.png',
+'0099485484':'https://iili.io/3yMpU22.png',
+'0099490867':'https://iili.io/3yMpg7S.png',
+'0099500987':'https://iili.io/3yMprk7.png',
+'0099542815':'https://iili.io/3yMp4p9.png',
+'0099593012':'https://iili.io/3yMpPIe.png',
+'0099668155':'https://iili.io/3yMpihu.png',
+'0099685274':'https://iili.io/3yMpQBj.png',
+'0099702729':'https://iili.io/3yMpZEx.png',
+'0099810987':'https://iili.io/3yMpmYB.png',
+'0099820060':'https://iili.io/3yMppkP.png',
+'0099921739':'https://iili.io/3yMyHTF.png',
+'0101002764':'https://iili.io/3yMydQa.png',
+'0101064481':'https://iili.io/3yMyK4R.png',
+'0101096818':'https://iili.io/3yMyBYN.png',
+'0101167723':'https://iili.io/3yMyCvI.png',
+'0101305663':'https://iili.io/3yMynpt.png',
+'0101343841':'https://iili.io/3yMyxTX.png',
+'0101382551':'https://iili.io/3yMyzjn.png',
+'0101433626':'https://iili.io/3yMyuCG.png',
+'0101722893':'https://iili.io/3yMyIQs.png',
+'0101757958':'https://iili.io/3yMyR44.png',
+'0101879717':'https://iili.io/3yMyAGf.png',
+'0101994152':'https://iili.io/3yMy73l.png',
+'0102050529':'https://iili.io/3yMyYa2.png',
+'0102055430':'https://iili.io/3yMycy7.png',
+'0102179526':'https://iili.io/3yMy1je.png',
+'0102248991':'https://iili.io/3yMyEZu.png',
+'0102270454':'https://iili.io/3yMyMCb.png',
+'0102285039':'https://iili.io/3yMyW6x.png',
+'0102324208':'https://iili.io/3yMyh3Q.png',
+'0102327619':'https://iili.io/3yMyw8B.png',
+'0102388591':'https://iili.io/3yMyNyP.png',
+'0102458843':'https://iili.io/3yMyeu1.png',
+'0102465096':'https://iili.io/3yMyvZg.png',
+'0102497713':'https://iili.io/3yMy4FR.png',
+'0102618746':'https://iili.io/3yMyUMJ.png',
+'0102668091':'https://iili.io/3yMy6ap.png',
+'0102691911':'https://iili.io/3yMys9I.png',
+'0102722601':'https://iili.io/3yMyQwX.png',
+'0102727508':'https://iili.io/3yMyZtn.png',
+'0102757244':'https://iili.io/3yMyDns.png',
+'0102770605':'https://iili.io/3yMybMG.png',
+'0102845973':'https://iili.io/3yV99cl.png',
+'0102860764':'https://iili.io/3yV9d9S.png',
+'0102865159':'https://iili.io/3yV93N9.png',
+'0102883887':'https://iili.io/3yV92A7.png',
+'0103128035':'https://iili.io/3yV9Fte.png',
+'0103246056':'https://iili.io/3yV9fou.png',
+'0103280299':'https://iili.io/3yV9qMb.png',
+'0103354234':'https://iili.io/3yV9ocQ.png',
+'0103370752':'https://iili.io/3yV9xSV.png',
+'0103380590':'https://iili.io/3yV9TAP.png',
+'0103422449':'https://iili.io/3yV9uN1.png',
+'0103446694':'https://iili.io/3yV9ADF.png',
+'0103460376':'https://iili.io/3yV95og.png',
+'0103470056':'https://iili.io/3yV97Va.png',
+'0103473056':'https://iili.io/3yV9cKv.png',
+'0103552534':'https://iili.io/3yV9YiJ.png',
+'0103736666':'https://iili.io/3yV9llR.png',
+'0103769917':'https://iili.io/3yV90Sp.png',
+'0103849692':'https://iili.io/3yV9EHN.png',
+'0103879784':'https://iili.io/3yV9GRI.png',
+'0104005578':'https://iili.io/3yV9MNt.png',
+'0104011892':'https://iili.io/3yV9hVs.png',
+'0104264057':'https://iili.io/3yV9SO7.png',
+'0104330161':'https://iili.io/3yV98RS.png',
+'0104363242':'https://iili.io/3yV9Ub9.png',
+'0104503840':'https://iili.io/3yV94Wu.png',
+'0104591693':'https://iili.io/3yV9ifj.png',
+'0104649323':'https://iili.io/3yV9s0x.png',
+'0104805291':'https://iili.io/3yV9LUQ.png',
+'0104805913':'https://iili.io/3yV9t5B.png',
+'0104888005':'https://iili.io/3yV9bb1.png',
+'0105100405':'https://iili.io/3yV9pzF.png',
+'0105151263':'https://iili.io/3yV9yWg.png',
+'0105153368':'https://iili.io/3yVHd0v.png',
+'0105163134':'https://iili.io/3yVH2gR.png',
+'0105220987':'https://iili.io/3yVHK5N.png',
+'0105261970':'https://iili.io/3yVHqbt.png',
+'0105430806':'https://iili.io/3yVHoss.png',
+'0105486874':'https://iili.io/3yVHTg4.png',
+'0105520010':'https://iili.io/3yVH5eS.png',
+'0105537163':'https://iili.io/3yVHaI9.png',
+'0105626760':'https://iili.io/3yVHcXe.png',
+'0105656441':'https://iili.io/3yVHlLu.png',
+'0105749279':'https://iili.io/3yVH1qb.png',
+'0105926469':'https://iili.io/3yVHE1j.png',
+'0105977725':'https://iili.io/3yVHW7V.png',
+'0105988622':'https://iili.io/3yVHhmP.png',
+'0106138743':'https://iili.io/3yVHwI1.png',
+'0106176619':'https://iili.io/3yVHNhF.png',
+'0106204543':'https://iili.io/3yVHkBa.png',
+'0106393831':'https://iili.io/3yVHU2R.png',
+'0106424833':'https://iili.io/3yVHihX.png',
+'0106466059':'https://iili.io/3yVHPIt.png',
+'0106545004':'https://iili.io/3yVHQBs.png',
+'0106630500':'https://iili.io/3yVHb24.png',
+'0106664471':'https://iili.io/3yVHpv2.png',
+'0106786303':'https://iili.io/3yVJHT7.png',
+'0106873444':'https://iili.io/3yVJJj9.png',
+'0106927839':'https://iili.io/3yVJ3Cu.png',
+'0107017787':'https://iili.io/3yVJK4j.png',
+'0107024603':'https://iili.io/3yVJq3x.png',
+'0107028592':'https://iili.io/3yVJCvV.png',
+'0107070068':'https://iili.io/3yVJzj1.png',
+'0107098164':'https://iili.io/3yVJuCg.png',
+'0107109613':'https://iili.io/3yVJAGa.png',
+'0107202639':'https://iili.io/3yVJR6J.png',
+'0107203540':'https://iili.io/3yVJavp.png',
+'0107387265':'https://iili.io/3yVJcyN.png',
+'0107441489':'https://iili.io/3yVJ0uI.png',
+'0107473295':'https://iili.io/3yVJ1jt.png',
+'0107515687':'https://iili.io/3yVJEZX.png',
+'0107578538':'https://iili.io/3yVJvt9.png',
+'0107832768':'https://iili.io/3yVJg6b.png',
+'0107859376':'https://iili.io/3yVJ4Fj.png',
+'0107871514':'https://iili.io/3yVJ6cx.png',
+'0107884582':'https://iili.io/3yVJLAB.png',
+'0107901184':'https://iili.io/3yVJmPa.png',
+'0107912383':'https://iili.io/3yVJyKJ.png',
+'0107921092':'https://iili.io/3yVd9cv.png',
+'0107921999':'https://iili.io/3yVdd9p.png',
+'0108020222':'https://iili.io/3yVd2AN.png',
+'0108088453':'https://iili.io/3yVd3NI.png',
+'0108226772':'https://iili.io/3yVdFtt.png',
+'0108295489':'https://iili.io/3yVdfoX.png',
+'0108308069':'https://iili.io/3yVdBPs.png',
+'0108324190':'https://iili.io/3yVdnKG.png',
+'0108349236':'https://iili.io/3yVdxS4.png',
+'0108385321':'https://iili.io/3yVdIHl.png',
+'0108480812':'https://iili.io/3yVdTR2.png',
+'0108504871':'https://iili.io/3yVduNS.png',
+'0108507882':'https://iili.io/3yVdAD7.png',
+'0108563537':'https://iili.io/3yVd7Ve.png',
+'0108590933':'https://iili.io/3yVdcKb.png',
+'0108774367':'https://iili.io/3yVdllj.png',
+'0108970077':'https://iili.io/3yVd0Ux.png',
+'0109015830':'https://iili.io/3yVdGRV.png',
+'0109144156':'https://iili.io/3yVdXx1.png',
+'0109237546':'https://iili.io/3yVdhWF.png',
+'0109314253':'https://iili.io/3yVdjig.png',
+'0109369327':'https://iili.io/3yVdO0J.png',
+'0109434409':'https://iili.io/3yVdeUv.png',
+'0109438600':'https://iili.io/3yVdvJR.png',
+'0109695572':'https://iili.io/3yVdSON.png',
+'0109868642':'https://iili.io/3yVdUbI.png',
+'0113981627':'https://iili.io/3yVd4WX.png'
+      // Add more NISN and photo URL mappings as needed
+    };
+    
+    // Function to get photo URL based on NISN
+    function getStudentPhoto(nisn) {
+      return studentPhotos[nisn] || null;
+    }
     
     // Function to show graduation check page
     function showGraduationCheck() {
@@ -572,7 +892,7 @@
       `;
 
       // URL Web App Google Apps Script
-      const url = 'https://script.google.com/macros/s/AKfycbxcHBimq9Zn-fydeJGE8B8KxF6SDn54iAnbUhC8H-Sau6X2lMJKjVHxLltyLCdjDBUBgQ/exec';
+      const url = 'https://script.google.com/macros/s/AKfycbxkbpCk19LOsjv2psNn2wbU3Y0IEz3rD1MGgW9ApaOpQBR50nZW_cDZWe9-8m-978aJvA/exec';
 
       // Using fetch() to request data from Google Apps Script
       fetch(`${url}?nisn=${nisn}`)
@@ -600,6 +920,9 @@
 
             // Determine status colors and icons
             const isLulus = data.Status.toLowerCase() === 'lulus';
+            
+            // Get student photo URL
+            const photoUrl = getStudentPhoto(data.NISN);
             
             // Show popup notification
             if (isLulus) {
@@ -644,13 +967,20 @@
               `;
             }
 
+            // Student photo or placeholder
+            const studentPhotoElement = photoUrl 
+              ? `<img src="${photoUrl}" alt="Foto ${data.Nama}" class="student-photo">`
+              : `<div class="photo-placeholder">
+                   <i class="fas fa-user text-3xl text-gray-400"></i>
+                 </div>`;
+            
             hasilDiv.innerHTML = `
               <div class="flex flex-col md:flex-row gap-6 mb-6">
                 <div class="w-full md:w-1/3">
                   <div class="bg-white rounded-xl shadow-sm p-4 border border-gray-200">
                     <div class="flex flex-col items-center text-center">
-                      <div class="w-20 h-20 rounded-full ${randomColor}/20 flex items-center justify-center mb-3">
-                        <i class="fas fa-user-graduate text-3xl ${randomColor}"></i>
+                      <div class="mb-4">
+                        ${studentPhotoElement}
                       </div>
                       <h3 class="font-bold text-lg text-gray-800">${data.Nama}</h3>
                       <p class="text-sm text-gray-500">NISN: ${data.NISN}</p>
@@ -755,7 +1085,6 @@
               
               <!-- Action Buttons -->
               <div class="flex flex-col sm:flex-row gap-3 mt-6">
-                
                 <button onclick="document.getElementById('nisn').value = ''; cekKelulusan();" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 px-4 rounded-lg font-medium flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all">
                   <i class="fas fa-redo"></i> Cek Lagi
                 </button>
